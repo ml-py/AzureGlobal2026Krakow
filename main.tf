@@ -43,7 +43,8 @@ module "keyvault" {
 # --- MODUŁ MS SQL ---
 
 module "mssql" {
-  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=mssql/v1.0.0"
+  # Poprawiony tag z mssql/v1.0.0 na sql/v1.0.0
+  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=sql/v1.0.0"
 
   # Unikalna nazwa serwera (musi być unikalna w skali Azure)
   sql_server_name = "sql-server-user10-globazu"
@@ -56,5 +57,5 @@ module "mssql" {
 
   # Poświadczenia administratora
   administrator_login          = "sqladmin"
-  administrator_login_password = "Password12345!" # Pamiętaj o wymogach złożoności Azure
+  administrator_login_password = "Password12345!"
 }
