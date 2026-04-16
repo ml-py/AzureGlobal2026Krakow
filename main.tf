@@ -4,7 +4,7 @@ terraform {
       source  = "hashicorp/azurerm"
       # Zmiana na wersję 3.x może pomóc, jeśli moduł był pod nią testowany,
       # ale najbezpieczniej upewnić się, że konfiguracja sieciowa jest pełna.
-      version = "~> 4.1.0"
+      version = ">= 4.1.0"
     #  version = "=4.1.0"
     }
   }
@@ -31,6 +31,7 @@ module "keyvault" {
     name     = "rg-user10"
   }
   network_acls = {
+    bypass = "AzureService"
     bypass = "AzureServices"
   }
 }
