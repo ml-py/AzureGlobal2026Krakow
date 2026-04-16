@@ -35,7 +35,7 @@ module "keyvault" {
   # Uzupełnienie network_acls zgodnie z Twoją tabelą wymagań (Required: yes)
   network_acls = {
     default_action             = "Deny"
-    bypass                     = "AzureServices" # Poprawiono z "AzureService" na "AzureServices"
+    bypass                     = "AzureServices"
     virtual_network_subnet_ids = []
     ip_rules                   = []
   }
