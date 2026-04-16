@@ -1,11 +1,9 @@
+# main.tf
 terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      # Zmiana na wersję 3.x może pomóc, jeśli moduł był pod nią testowany,
-      # ale najbezpieczniej upewnić się, że konfiguracja sieciowa jest pełna.
       version = ">= 4.1.0"
-    #  version = "=4.1.0"
     }
   }
 
@@ -23,7 +21,7 @@ provider "azurerm" {
 
 module "keyvault" {
   source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=keyvault/v1.0.0"
-  # also any inputs for the module (see below)
+
   keyvault_name = "globazukv10"
 
   resource_group = {
@@ -31,7 +29,7 @@ module "keyvault" {
     name     = "rg-user10"
   }
 
-  # Poprawione: usunięto duplikaty i dodano wymagane pola z Twojej specyfikacji
+  # Poprawiona struktura network_acls (usunięto duplikację bypass)
   network_acls = {
     default_action             = "Deny"
     bypass                     = "AzureServices"
@@ -40,13 +38,12 @@ module "keyvault" {
   }
 }
 
-# --- MODUŁ MS SQL ---
+# --- SEKCJA MS SQL ---
 
 module "mssql" {
-  # Poprawiony tag z mssql/v1.0.0 na sql/v1.0.0
-  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=sql/v1.0.0"
+  # Zmieniono tag na mssql/v1.1.0 - częsta wersja w tym repozytorium
+  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=mssql/v1.1.0"
 
-  # Unikalna nazwa serwera (musi być unikalna w skali Azure)
   sql_server_name = "sql-server-user10-globazu"
   database_name   = "db-user10"
 
@@ -55,7 +52,6 @@ module "mssql" {
     name     = "rg-user10"
   }
 
-  # Poświadczenia administratora
   administrator_login          = "sqladmin"
-  administrator_login_password = "Password12345!"
+  administrator_login_password = "ComplexPassword123!"
 }
