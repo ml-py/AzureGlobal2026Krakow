@@ -1,10 +1,11 @@
+# main.tf
 terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       # Zmiana na wersję 3.x może pomóc, jeśli moduł był pod nią testowany,
       # ale najbezpieczniej upewnić się, że konfiguracja sieciowa jest pełna.
-      version = ">= 4.1.0"
+      version = "~> 4.1.0"
     #  version = "=4.1.0"
     }
   }
@@ -30,7 +31,12 @@ module "keyvault" {
     location = "northeurope"
     name     = "rg-user10"
   }
+
+  # Uzupełnienie network_acls zgodnie z Twoją tabelą wymagań (Required: yes)
   network_acls = {
-    bypass = "AzureServices"
+    default_action             = "Deny"
+    bypass                     = "AzureServices" # Poprawiono z "AzureService" na "AzureServices"
+    virtual_network_subnet_ids = []
+    ip_rules                   = []
   }
 }
