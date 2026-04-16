@@ -1,4 +1,3 @@
-# main.tf
 terraform {
   required_providers {
     azurerm = {
@@ -31,12 +30,7 @@ module "keyvault" {
     location = "northeurope"
     name     = "rg-user10"
   }
-
-  # Uzupełnienie network_acls zgodnie z Twoją tabelą wymagań (Required: yes)
   network_acls = {
-    default_action             = "Deny"
-    bypass                     = "AzureServices"
-    virtual_network_subnet_ids = []
-    ip_rules                   = []
+    bypass = "AzureServices"
   }
 }
