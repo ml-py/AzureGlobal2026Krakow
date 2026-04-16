@@ -35,3 +35,22 @@ module "keyvault" {
     bypass = "AzureServices"
   }
 }
+
+# --- MODUŁ MS SQL ---
+
+module "mssql" {
+  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=mssql/v1.0.0"
+
+  # Unikalna nazwa serwera (musi być unikalna w skali Azure)
+  sql_server_name = "sql-server-user10-globazu"
+  database_name   = "db-user10"
+
+  resource_group = {
+    location = "northeurope"
+    name     = "rg-user10"
+  }
+
+  # Poświadczenia administratora
+  administrator_login          = "sqladmin"
+  administrator_login_password = "Password12345!" # Pamiętaj o wymogach złożoności Azure
+}
