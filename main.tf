@@ -30,9 +30,13 @@ module "keyvault" {
     location = "northeurope"
     name     = "rg-user10"
   }
+
+  # Poprawione: usunięto duplikaty i dodano wymagane pola z Twojej specyfikacji
   network_acls = {
-    bypass = "AzureService"
-    bypass = "AzureServices"
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
+    virtual_network_subnet_ids = []
+    ip_rules                   = []
   }
 }
 
